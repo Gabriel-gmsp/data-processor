@@ -15,6 +15,75 @@ class TargetInterface(metaclass=abc.ABCMeta):
     def save_data(self, data): # Método abstrato para salvar dados.
         pass
 
+class MysqlSource(SourceInterface):
+    
+    def __init__(self, host, user, password, database, table):
+        
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
+        self.table = table
+    
+    def get_data(self):
+        
+        try:
+            connection = connect(host=self.host,
+                                 user=self.user,
+                                 password=self.password,
+                                 database=self.database)
+            
+            cursor = connection.cursor()
+            cursor.execute(f'SELECT * FROM {self.table}')
+            data = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return data
+        except Error as e:
+            print(f'Error ocurred: {e}')
+            
+class CsvSouuce(SourceInterface):
+    def __init__(self,file_path):
+        
+        self.file_path = file_path
+    
+    def get_data(self):
+        
+        with open(self.file_path, mode='r') as file:
+            reader = csv.reader(file, delimiter=';')
+            data = []
+            for row in reader:
+                data.append(row)
+            return data
+        
+class APISource(SourceInterface):
+    def __init__(self, url):
+        
+        self.url = url
+        
+    def get_data(self):
+        
+        response = requests.get(self.url)
+        
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f'Error ocurred: {response.status_code}')
+                
+                
+                 
+        
+
+
+
+
+
+
+
+
+
+
+
 class DataProcessor(metaclass=abc.ABCMeta): #Classe abstrata para processamento de dados
     def __init__(self, source, target):
         

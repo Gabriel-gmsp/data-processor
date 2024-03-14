@@ -1,20 +1,13 @@
 import abc
 import time
 
-
-class TargetInterface(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def save_data(self, data): # Método abstrato para salvar dados.
-        pass
-
-
 class DataProcessor(metaclass=abc.ABCMeta): #Classe abstrata para processamento de dados
     def __init__(self, source, target):
         
         # Inicializa um objeto DataProcessor.
         # Args:
-        #     source: Fonte de dados a ser processada.
-        #     target: Destino onde os dados processados serão salvos.
+        # source: Fonte de dados a ser processada.
+        # target: Destino onde os dados processados serão salvos.
         
         self.source = source
         self.target = target

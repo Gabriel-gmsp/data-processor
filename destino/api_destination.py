@@ -3,6 +3,7 @@ import requests
 
 
 class APIDestination(TargetInterface):
+    
     def __init__(self,url):
         self.url = url
     def save_data(self, data):

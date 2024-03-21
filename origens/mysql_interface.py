@@ -1,5 +1,6 @@
 import origens
 from mysql.connector import connect
+
 class MysqlSource(origens.SourceInterface):
     
     def __init__(self, host, user, password, database, table):

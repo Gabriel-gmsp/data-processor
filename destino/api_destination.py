@@ -16,3 +16,4 @@ class APIDestination(TargetInterface):
         else:
             
             print(f"Error occurred: {response.status_code}")
+            
